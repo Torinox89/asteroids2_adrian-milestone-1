@@ -65,7 +65,7 @@ class Ship {
         this.radius = 15;
         this.angle = 0;
         this.strokeColor = 'white';
-        // Used to know where to fire the bullet from
+     
         this.noseX = canvasWidth / 2 + 15;
         this.noseY = canvasHeight / 2;
     }
@@ -76,16 +76,12 @@ class Ship {
         // Get current direction ship is facing
         let radians = this.angle / Math.PI * 180;
  
-        // If moving forward calculate changing values of x & y
-        // If you want to find the new point x use the 
-        // formula oldX + cos(radians) * distance
-        // Forumla for y oldY + sin(radians) * distance
+      
         if (this.movingForward) {
             this.velX += Math.cos(radians) * this.speed;
             this.velY += Math.sin(radians) * this.speed;
         }
-        // If ship goes off board place it on the opposite
-        // side    
+        
         if (this.x < this.radius) {
             this.x = canvas.width;
         }
@@ -98,11 +94,11 @@ class Ship {
         if (this.y > canvas.height) {
             this.y = this.radius;
         }
-        // Slow ship speed when not holding key
+        // Slow ship speed: not holding key
         this.velX *= 0.99;
         this.velY *= 0.99;
- 
-        // Change value of x & y while accounting for
+
+   
         // air friction    
         this.x -= this.velX;
         this.y -= this.velY;
@@ -110,11 +106,11 @@ class Ship {
     Draw() {
         ctx.strokeStyle = this.strokeColor;
         ctx.beginPath();
-        // Angle between vertices of the ship
+        //vertices of the ship:  Angle in between 
         let vertAngle = ((Math.PI * 2) / 3);
  
         let radians = this.angle / Math.PI * 180;
-        // Where to fire bullet from
+        // fire bullet: origin
         this.noseX = this.x - this.radius * Math.cos(radians);
         this.noseY = this.y - this.radius * Math.sin(radians);
  
@@ -126,3 +122,25 @@ class Ship {
     }
 }
  
+class Bullet{
+    constructor(angle) {
+        this.visible = true;
+        this.x = ship.noseX;
+        this.y = ship.noseY;
+        this.angle = angle;
+        this.height = 4;
+        this.width = 4;
+        this.speed = 4;
+        this.velX = 0;
+        this.velY = 0;
+    }
+    Update(){
+        let radians = this.angle / Math.PI * 180;
+        this.x -= Math.cos(radians) * this.speed;
+        this.y -= Math.sin(radians) * this.speed;
+    }
+    Draw(){
+        ctx.fillStyle = 'white';
+        ctx.fillRect(this.x,this.y,this.width,this.height);
+    }
+}
