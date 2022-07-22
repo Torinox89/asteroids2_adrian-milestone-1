@@ -1,15 +1,13 @@
 let canvas;
 let ctx;
-let canvasWidth = 1000;
 let canvasHeight = 700;
-let keys = [];
+let canvasWidth = 1000;
 let ship;
-let bullets = [];
 let asteroids = [];
+let bullets = [];
+let keys = [];
 let score = 0;
 let lives = 3;
- 
-
 let highScore;
 let localStorageName = "HighScore";
  
@@ -41,7 +39,7 @@ function SetupCanvas(){
     Render();
 }
 
-//game  over:event handling
+//game  over:event 
 function HandleKeyDown(e){
     keys[e.keyCode] = true;
 }
@@ -73,7 +71,7 @@ class Ship {
         this.angle += this.rotateSpeed * dir;
     }
     Update() {
-        // Get current direction ship is facing
+        // urrent direction ship
         let radians = this.angle / Math.PI * 180;
  
       
@@ -144,3 +142,69 @@ class Bullet{
         ctx.fillRect(this.x,this.y,this.width,this.height);
     }
 }
+
+class Asteroid{  
+    constructor(x,y,radius,level,collisionRadius) {
+        this.visible = true;
+        this.x = x || Math.floor(Math.random() * canvasWidth);
+        this.y = y || Math.floor(Math.random() * canvasHeight);
+        this.speed = 0.8;
+        this.radius = radius || 50;
+        this.angle = Math.floor(Math.random() * 359);
+        this.strokeColor = 'white';
+        this.collisionRadius = collisionRadius || 46;
+        // Used to decide if this asteroid can be broken into smaller pieces
+        this.level = level || 1;  
+    }
+    Update(){
+        let radians = this.angle / Math.PI * 180;
+        this.x += Math.cos(radians) * this.speed;
+        this.y += Math.sin(radians) * this.speed;
+        if (this.x < this.radius) {
+            this.x = canvas.width;
+        }
+        if (this.x > canvas.width) {
+            this.x = this.radius;
+        }
+        if (this.y < this.radius) {
+            this.y = canvas.height;
+        }
+        if (this.y > canvas.height) {
+            this.y = this.radius;
+        }
+    }
+    Draw(){
+        ctx.beginPath();
+        let vertAngle = ((Math.PI * 2) / 6);
+        var radians = this.angle / Math.PI * 180;
+        for(let i = 0; i < 6; i++){
+            ctx.lineTo(this.x - this.radius * Math.cos(vertAngle * i + radians), this.y - this.radius * Math.sin(vertAngle * i + radians));
+        }
+        ctx.closePath();
+        ctx.stroke();
+    }
+}
+ 
+function CircleCollision(p1x, p1y, r1, p2x, p2y, r2){
+    let radiusSum;
+    let xDiff;
+    let yDiff;
+ 
+    radiusSum = r1 + r2;
+    xDiff = p1x - p2x;
+    yDiff = p1y - p2y;
+ 
+    if (radiusSum > Math.sqrt((xDiff * xDiff) + (yDiff * yDiff))) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+
+
+
+
+
+
