@@ -273,6 +273,75 @@ if(asteroids.length === 0){
     }
 }
 
+ // Draw life ships
+ DrawLifeShips();
+ 
+ // Check for collision of ship with asteroid
+ if (asteroids.length !== 0) {
+     for(let k = 0; k < asteroids.length; k++){
+         if(CircleCollision(ship.x, ship.y, 11, asteroids[k].x, asteroids[k].y, asteroids[k].collisionRadius)){
+             ship.x = canvasWidth / 2;
+             ship.y = canvasHeight / 2;
+             ship.velX = 0;
+             ship.velY = 0;
+             lives -= 1;
+         }
+     }
+ }
+
+ // Check for collision with bullet and asteroid
+ if (asteroids.length !== 0 && bullets.length != 0){
+loop1:
+     for(let l = 0; l < asteroids.length; l++){
+         for(let m = 0; m < bullets.length; m++){
+             if(CircleCollision(bullets[m].x, bullets[m].y, 3, asteroids[l].x, asteroids[l].y, asteroids[l].collisionRadius)){
+                 // Check if asteroid can be broken into smaller pieces
+                 if(asteroids[l].level === 1){
+                     asteroids.push(new Asteroid(asteroids[l].x - 5, asteroids[l].y - 5, 25, 2, 22));
+                     asteroids.push(new Asteroid(asteroids[l].x + 5, asteroids[l].y + 5, 25, 2, 22));
+                 } else if(asteroids[l].level === 2){
+                     asteroids.push(new Asteroid(asteroids[l].x - 5, asteroids[l].y - 5, 15, 3, 12));
+                     asteroids.push(new Asteroid(asteroids[l].x + 5, asteroids[l].y + 5, 15, 3, 12));
+                 }
+                 asteroids.splice(l,1);
+                 bullets.splice(m,1);
+                 score += 20;
+
+                 // Used to break out of loops because splicing arrays
+                 // you are looping through will break otherwise
+                 break loop1;
+             }
+         }
+     }
+ }
+
+ if(ship.visible){
+     ship.Update();
+     ship.Draw();
+ }
+ 
+ if (bullets.length !== 0) {
+     for(let i = 0; i < bullets.length; i++){
+         bullets[i].Update();
+         bullets[i].Draw();
+     }
+ }
+ if (asteroids.length !== 0) {
+     for(let j = 0; j < asteroids.length; j++){
+         asteroids[j].Update();
+         // Pass j so we can track which asteroid points to store
+         asteroids[j].Draw(j);
+     }
+ }
+
+ // Updates the high score using local storage
+ highScore = Math.max(score, highScore);
+ localStorage.setItem(localStorageName, highScore);
+ ctx.font = '21px Arial';
+ ctx.fillText("HIGH SCORE : " + highScore.toString(), 20, 70);
+
+ requestAnimationFrame(Render);
+}
 
 
 
