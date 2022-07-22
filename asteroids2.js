@@ -201,9 +201,77 @@ function CircleCollision(p1x, p1y, r1, p2x, p2y, r2){
     }
 }
 
+// drawing-life ships: on screen
+function DrawLifeShips(){
+    let startX = 1350;
+    let startY = 10;
+    let points = [[9, 9], [-9, 9]];
+    ctx.strokeStyle = 'white'; 
+    // live ships remaining
+    for(let i = 0; i < lives; i++){
+        // Start drawing ship
+        ctx.beginPath();
+        // Move to origin point
+        ctx.moveTo(startX, startY);
+        // Cycle through all other points
+        for(let j = 0; j < points.length; j++){
+            ctx.lineTo(startX + points[j][0], 
+                startY + points[j][1]);
+        }
+        // Draw from last point to 1st origin point
+        ctx.closePath();
+        // Stroke the ship shape white
+        ctx.stroke();
+        // Move next shape 30 pixels to the left
+        startX -= 30;
+    }
+}
+ 
+function Render() {
+    // Check if the ship is moving forward
+    ship.movingForward = (keys[87]);
+ 
+    if (keys[68]) {
+        // d key rotate right
+        ship.Rotate(1);
+    }
+    if (keys[65]) {
+        // a key rotate left
+       ship.Rotate(-1);
+    }
+   
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+ 
+    // Display score
+    ctx.fillStyle = 'white';
+    ctx.font = '21px Arial';
+    ctx.fillText("SCORE : " + score.toString(), 20, 35);
+ 
+    // If no lives signal game over
+    if(lives <= 0){
+        
+        //Game over remove event listeners: stop getting keyboard inputs
+        document.body.removeEventListener("keydown", HandleKeyDown);
+        document.body.removeEventListener("keyup", HandleKeyUp);
+ 
+        ship.visible = false;
+        ctx.fillStyle = 'white';
+        ctx.font = '50px Arial';
+        ctx.fillText("GAME OVER", canvasWidth / 2 - 150, canvasHeight / 2);
+    }
 
-
-
+//new level, increases asteroid speed
+if(asteroids.length === 0){
+    ship.x = canvasWidth / 2;
+    ship.y = canvasHeight / 2;
+    ship.velX = 0;
+    ship.velY = 0;
+    for(let i = 0; i < 8; i++){
+        let asteroid = new Asteroid();
+        asteroid.speed += .5;
+        asteroids.push(asteroid);
+    }
+}
 
 
 
