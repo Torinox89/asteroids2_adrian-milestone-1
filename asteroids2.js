@@ -175,7 +175,7 @@ class Asteroid{
     }
     Draw(){
         ctx.beginPath();
-        let vertAngle = ((Math.PI * 2) / 6);
+        let vertAngle = ((Math.PI * 3) /8);
         var radians = this.angle / Math.PI * 180;
         for(let i = 0; i < 6; i++){
             ctx.lineTo(this.x - this.radius * Math.cos(vertAngle * i + radians), this.y - this.radius * Math.sin(vertAngle * i + radians));
