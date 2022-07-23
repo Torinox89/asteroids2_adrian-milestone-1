@@ -71,7 +71,7 @@ class Ship {
         this.angle += this.rotateSpeed * dir;
     }
     Update() {
-        // urrent direction ship
+        //current direction ship
         let radians = this.angle / Math.PI * 180;
  
       
@@ -153,7 +153,7 @@ class Asteroid{
         this.angle = Math.floor(Math.random() * 359);
         this.strokeColor = 'white';
         this.collisionRadius = collisionRadius || 46;
-        // Used to decide if this asteroid can be broken into smaller pieces
+        // decide: asteroid can be broken, smaller pieces
         this.level = level || 1;  
     }
     Update(){
@@ -218,36 +218,36 @@ function DrawLifeShips(){
             ctx.lineTo(startX + points[j][0], 
                 startY + points[j][1]);
         }
-        // Draw from last point to 1st origin point
+        // Draw: from last point to first origin point
         ctx.closePath();
-        // Stroke the ship shape white
+        // Stroke: the ship, shape white
         ctx.stroke();
-        // Move next shape 30 pixels to the left
+        // Move next shape: 30 pixels to the left
         startX -= 30;
     }
 }
  
 function Render() {
-    // Check if the ship is moving forward
+    //  ship is moving forward
     ship.movingForward = (keys[87]);
  
     if (keys[68]) {
-        // d key rotate right
+        // d key: rotate-right
         ship.Rotate(1);
     }
     if (keys[65]) {
-        // a key rotate left
+        // a key: rotate-left
        ship.Rotate(-1);
     }
    
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
  
-    // Display score
+    // Display: score
     ctx.fillStyle = 'white';
     ctx.font = '21px Arial';
     ctx.fillText("SCORE : " + score.toString(), 20, 35);
  
-    // If no lives signal game over
+    // no more lives: signal game over
     if(lives <= 0){
         
         //Game over remove event listeners: stop getting keyboard inputs
@@ -273,10 +273,10 @@ if(asteroids.length === 0){
     }
 }
 
- // Draw life ships
+ // Draw:  life ships
  DrawLifeShips();
  
- // Check for collision of ship with asteroid
+ // Check for: collision of ship with asteroid
  if (asteroids.length !== 0) {
      for(let k = 0; k < asteroids.length; k++){
          if(CircleCollision(ship.x, ship.y, 11, asteroids[k].x, asteroids[k].y, asteroids[k].collisionRadius)){
@@ -289,7 +289,7 @@ if(asteroids.length === 0){
      }
  }
 
- // Check for collision with bullet and asteroid
+ // Check for: collision with bullet and asteroid
  if (asteroids.length !== 0 && bullets.length != 0){
 loop1:
      for(let l = 0; l < asteroids.length; l++){
@@ -307,8 +307,7 @@ loop1:
                  bullets.splice(m,1);
                  score += 20;
 
-                 // Used to break out of loops because splicing arrays
-                 // you are looping through will break otherwise
+                 // Used to break out of loops
                  break loop1;
              }
          }
@@ -334,7 +333,7 @@ loop1:
      }
  }
 
- // Updates the high score using local storage
+ // Updates the high score: use local storage
  highScore = Math.max(score, highScore);
  localStorage.setItem(localStorageName, highScore);
  ctx.font = '21px Arial';
