@@ -8,11 +8,11 @@ b. Asteroids (arcade game: Lyle Rains & Ed Logg, released by Atari Inc, 1979)
 
 Keys:
 
-F5: re-start
-W: hacia adelante
-A: rotacion hacia la izquierda
-D: rotacion hacia la derecha
-Tab: disparo
+F5: restart
+w: forward
+A: counterclockwise rotation
+D: clockwise rotation
+Tab: shot
 
 
 Initially, our instructor Sam suggested that I evaluate this video tutorial.
