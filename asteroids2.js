@@ -13,7 +13,9 @@ let localStorageName = "HighScore";
  
 //Loading Setup Canvas
 document.addEventListener('DOMContentLoaded', SetupCanvas);
- 
+ // The creation of Canvas: in the upper left quadrant, 
+ // its width and height and background color; 
+ // using the fillRect function.
 function SetupCanvas(){
     canvas = document.getElementById("asteroids-canvas");
     ctx = canvas.getContext("2d");
