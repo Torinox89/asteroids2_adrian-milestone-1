@@ -22,14 +22,16 @@ function SetupCanvas(){
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
     ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillRect(0, 0, canvas.width, canvas.height); 
+
+    //The creation of a new ship: "new object"
     ship = new Ship();
  
     //Crate moro than  one ship
     for(let i = 0; i < 8; i++){         
         asteroids.push(new Asteroid());
     }
-//  handling the events like: keydown and keyup
+    //  handling the events like: keydown and keyup
     document.body.addEventListener("keydown", HandleKeyDown);
     document.body.addEventListener("keyup", HandleKeyUp);
 
